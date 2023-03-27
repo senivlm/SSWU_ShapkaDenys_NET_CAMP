@@ -91,7 +91,18 @@ namespace HW1
                         int n=0;
                         for (int i = 0; i < en.Length; i++)
                         {
-                            Console.Write($"{en[i]}; ");
+                            if (n<3)
+                            {
+                                Console.Write($"{en[i]}; ");
+                                n++;
+                            }
+                            else
+                            {
+                                Console.Write($"{en[i]}; ");
+                                Console.WriteLine();
+                                n=0;
+                            }
+                            
                         }
                         
                     }
