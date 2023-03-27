@@ -64,49 +64,40 @@ namespace HW1
                             Console.WriteLine();
                         }
                     }
-                    if (width<height)
-                    {        
-                        int gump=width;
+                    if (width < height)
+                    {
+                        int gump = width;
                         rez = -1;
-                        for (int i = 0; i <3; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             for (int j = 0; j < height; j++)
                             {
                                 rez = rez + (1 * side);
-                                en[rez] = num;                                
+                                en[rez] = num;
                                 num++;
-                                
+
                             }
-                            for (int j = 0; j < width-1; j++)
+                            for (int j = 0; j < width - 1; j++)
                             {
-                                rez=rez+(1*side);
-                                rez = rez + (gump*side);
-                                en[rez] = num;                                
-                                num++;                                
+                                rez = rez + (1 * side);
+                                rez = rez + (gump * side);
+                                en[rez] = num;
+                                num++;
                             }
                             height--;
                             width--;
                             side = side * (-1);
                         }
-                        int n=0;
+                        int n = 0;
                         for (int i = 0; i < en.Length; i++)
                         {
-                            if (n<3)
-                            {
-                                Console.Write($"{en[i]}; ");
-                                n++;
-                            }
-                            else
-                            {
-                                Console.Write($"{en[i]}; ");
-                                Console.WriteLine();
-                                n=0;
-                            }
-                            
+
+                            Console.Write($"{en[i]}; ");
+
                         }
-                        
+
                     }
-                    
+
                     break;
                 case 2:
 
@@ -148,12 +139,12 @@ namespace HW1
                                 pEnd = j == 0 ? (-1, -1) : (i, j - 1);
                                 start = (i, j);
                             }
-                            if ((j >= columns - 1) && mas[i, j] == mas[i, j - 1]) 
+                            if ((j >= columns - 1) && mas[i, j] == mas[i, j - 1])
                             {
                                 pStart = start;
                                 pEnd = (i, j);
                             }
-                            if ((maxEnd.j - maxStart.j + 1 < pEnd.j - pStart.j + 1) || (maxStart.j == -1 && pEnd.j != -1)) 
+                            if ((maxEnd.j - maxStart.j + 1 < pEnd.j - pStart.j + 1) || (maxStart.j == -1 && pEnd.j != -1))
                             {
                                 maxStart = pStart;
                                 maxEnd = pEnd;
@@ -161,7 +152,9 @@ namespace HW1
                         }
                     }
                     Console.WriteLine($"Найдовший рядок - колiр: {mas[maxStart.i, maxStart.j]}, з iндексами: [{maxStart.i}, {maxStart.j}] - [{maxEnd.i}, {maxEnd.j}], має довжину: {maxEnd.j - maxStart.j + 1}");
+
                     break;
+
             }
 
 
