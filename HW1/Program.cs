@@ -14,9 +14,9 @@ namespace HW1
             {
                 case 1:
 
-                    Console.WriteLine("Введіть вишину масиву");
+                    Console.WriteLine("Введiть вишину масиву");
                     int height = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Введіть довжинуо масиву");
+                    Console.WriteLine("Введiть довжинуо масиву");
                     int width = int.Parse(Console.ReadLine());
                     int[,] snail = new int[height, width];
                     int[] en = new int[height * width];
@@ -45,80 +45,111 @@ namespace HW1
                             gump--;
                             side = side * -1;
                         }
-                    }
-                    int n = 0;
-                    for (int y = 0; y < width; y++)
-                    {
-                        for (int x = 0; x < height; x++)
-                        {
-                            snail[x, y] = en[n];
-                            n++;
-                        }
-                        Console.WriteLine();
-                    }                    
-                    Console.WriteLine();
-                    for (int y = 0; y < height; y++)
-                    {
+                        int n = 0;
                         for (int x = 0; x < width; x++)
                         {
-                            Console.Write($"{snail[y, x]}; ");
+                            for (int y = 0; y < height; y++)
+                            {
+                                snail[y, x] = en[n];
+                                n++;
+                            }
                         }
                         Console.WriteLine();
+                        for (int y = 0; y < height; y++)
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                Console.Write($"{snail[y, x]}; ");
+                            }
+                            Console.WriteLine();
+                        }
                     }
+                    if (width<height)
+                    {        
+                        int gump=width;
+                        rez = -1;
+                        for (int i = 0; i <3; i++)
+                        {
+                            for (int j = 0; j < height; j++)
+                            {
+                                rez = rez + (1 * side);
+                                en[rez] = num;                                
+                                num++;
+                                
+                            }
+                            for (int j = 0; j < width-1; j++)
+                            {
+                                rez=rez+(1*side);
+                                rez = rez + (gump*side);
+                                en[rez] = num;                                
+                                num++;                                
+                            }
+                            height--;
+                            width--;
+                            side = side * (-1);
+                        }
+                        int n=0;
+                        for (int i = 0; i < en.Length; i++)
+                        {
+                            Console.Write($"{en[i]}; ");
+                        }
+                        
+                    }
+                    
                     break;
                 case 2:
-                    
+
+                    int[,] mas;
+                    int rows, columns, colors = 16;
+                    (int i, int j) maxStart = (-1, -1), maxEnd = (-1, -1), start = (-1, -1), pStart = (-1, -1), pEnd = (-1, -1);
+                    bool result;
                     Random random = new Random();
-                    int [,] m= new int[16, 16];
-                    for (int i = 0; i < m.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < m.GetLength(1); j++)
-                        {
-                            m[i, j] = random.Next(0, 17);
-                        }
-                    }
-                    int rep = m[0,0];
-                    int next = 0;
-                    int nextf = 0;
-                    int bor = 0;
-                    int rf = 0;
-                    int xend = 0;
-                    int yend = 0;
-                    for (int i = 0; i < m.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < m.GetLength(1); j++)
-                        {
-                            if (rep == m[i,j])
-                            {                                
-                                next++;
-                            }
-                            else
-                            {
-                                if (next>=nextf)
-                                {
-                                    rf = m[i, j - 1];
-                                    nextf = next;
-                                    xend = j;
-                                    yend = i;
-                                }
-                                next= 0;
-                            }
-                            bor++;
-                        }
-                        bor = 0;
 
-                    }                    
-                    Console.WriteLine($"Довжина: {nextf}, Колір: {rf}, кінцева координата Х: {xend}, кінцева координата Y:{yend}");
-
-                    for (int i = 0; i < m.GetLength(0); i++)
+                    do
                     {
-                        for (int j = 0; j < m.GetLength(1); j++)
+                        Console.Write("Введiть кiлькiсть рядкiв: ");
+                        result = int.TryParse(Console.ReadLine(), out rows);
+                    } while (!result || rows <= 0);
+                    do
+                    {
+                        Console.Write("Введiть кiлькiсть стовбцiв: ");
+                        result = int.TryParse(Console.ReadLine(), out columns);
+                    } while (!result || columns <= 0);
+
+                    mas = new int[rows, columns];
+                    for (int i = 0; i < rows; i++)
+                    {
+                        for (int j = 0; j < columns; j++)
                         {
-                            Console.Write($"{m[i,j]}; ");
+                            mas[i, j] = random.Next(colors + 1);
+                            Console.Write($"{mas[i, j]}; ");
                         }
                         Console.WriteLine();
                     }
 
+                    for (int i = 0; i < rows; i++)
+                    {
+                        for (int j = 0; j < columns; j++)
+                        {
+                            if ((j == 0) || (j > 0 && mas[i, j] != mas[i, j - 1]))
+                            {
+                                pStart = j == 0 ? (-1, -1) : start;
+                                pEnd = j == 0 ? (-1, -1) : (i, j - 1);
+                                start = (i, j);
+                            }
+                            if ((j >= columns - 1) && mas[i, j] == mas[i, j - 1]) 
+                            {
+                                pStart = start;
+                                pEnd = (i, j);
+                            }
+                            if ((maxEnd.j - maxStart.j + 1 < pEnd.j - pStart.j + 1) || (maxStart.j == -1 && pEnd.j != -1)) 
+                            {
+                                maxStart = pStart;
+                                maxEnd = pEnd;
+                            }
+                        }
+                    }
+                    Console.WriteLine($"Найдовший рядок - колiр: {mas[maxStart.i, maxStart.j]}, з iндексами: [{maxStart.i}, {maxStart.j}] - [{maxEnd.i}, {maxEnd.j}], має довжину: {maxEnd.j - maxStart.j + 1}");
                     break;
             }
 
