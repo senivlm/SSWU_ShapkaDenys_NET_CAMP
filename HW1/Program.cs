@@ -5,7 +5,7 @@ namespace HW1
     internal class Program
     {
         
-
+//Вітаю. Перше завдання по створенню репозиторію Ви виконали.
         static void Main(string[] args)
         {
             Console.WriteLine("Натисьнiть цифру яка вiдповiдає завданню: 1-2");
